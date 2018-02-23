@@ -6,7 +6,8 @@ from ..models import Question, Choice
 
 #get serializers
 from .serializers import (
-    QuestionListSerializer
+    QuestionListSerializer,
+    ChoiceSerializer
 )
 
 class QuestionListAPIView(APIView):
@@ -17,7 +18,9 @@ class QuestionListAPIView(APIView):
         Feel free to use DRF generic class based views
         Otherwise it subclasses APIView
         """
-        pass
+        poll = Question.objects.all()
+        serializer = QuestionListSerializer(poll, many=True)
+        return Response(serializer.data)
 
     def post(self, request, format=None):
         """nothing required for lab 5"""
